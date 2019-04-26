@@ -1,4 +1,4 @@
-pragma solidity ^0.4.18;
+pragma solidity ^0.5.0;
 
 contract ApprovalContract {
 
@@ -6,11 +6,8 @@ contract ApprovalContract {
   address public receiver;
   address constant public approver = 0xC5fdf4076b8F3A5357c5E395ab970B5B54098Fef;
 
-  function constructor() public {
-    // tbd
-  }
 
-  function deposit(address _receiver) external payable {
+  function deposit(address payable _receiver) external payable {
     require(msg.value > 0);
     sender = msg.sender;
     receiver = _receiver;
@@ -22,7 +19,7 @@ contract ApprovalContract {
 
   function approve() external {
     require(msg.sender == approver);
-    receiver.transfer(this.balance);
+    address(uint(receiver)).transfer(address(this).balance);
   }
 
 }
